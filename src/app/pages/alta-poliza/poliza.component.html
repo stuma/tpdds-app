@@ -1,65 +1,244 @@
-<dx-tab-panel
-    #tabPanel
-    [height]="260"
-    [dataSource]="companies"
-    [selectedIndex]="0"
-    [loop]="false"
-    [animationEnabled]="true"
-    [swipeEnabled]="true"
->
-    <div *dxTemplate="let company of 'title'">
-        <span>{{company.CompanyName}}</span>
-    </div>
-    <div *dxTemplate="let company of 'item'">
-        <div class="tabpanel-item">
-            <div>
-                <p>
-                    <b>{{company.City}}</b>
-                    (<span>{{company.State}}</span>)
-                </p>
-                <p>
-                    <span>{{company.Zipcode}}</span>
-                    <span>{{company.Address}}</span>
-                </p>
-            </div>
-            <div>
-                <p>
-                    Phone: <b>{{company.Phone}}</b>
-                </p>
-                <p>
-                    Fax: <b>{{company.Fax}}</b>
-                </p>
-                <p>
-                    Website:
-                    <a href="{{company.Website}}" target="_blank">
-                        {{company.Website}}
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-</dx-tab-panel>
-<div class="item-box">
-    Item <span>{{tabPanel.selectedIndex + 1}}</span> of <span>{{itemCount}}</span>
-</div>
-<div class="options">
-    <div class="caption">Options</div>
-    <div class="option">
-        <dx-check-box
-            text="Loop enabled"
-            [(value)]="tabPanel.loop"
-        ></dx-check-box>
-    </div>
-    <div class="option">
-        <dx-check-box
-            text="Animation enabled"
-            [(value)]="tabPanel.animationEnabled"
-        ></dx-check-box>
-    </div>    
-    <div class="option">
-        <dx-check-box
-            text="Swipe enabled"
-            [(value)]="tabPanel.swipeEnabled"
-        ></dx-check-box>
-    </div>    
-</div>
+<dx-form [formData]="poliza" labelLocation="top" minColWidth="200" colCount="1" width="100%">
+  <dxi-item itemType="tabbed" [tabPanelOptions]="tabPanelOptions">
+
+    <dxi-tab title="Datos Cliente">
+      <dxi-item itemType="group" colCount="2">
+        <dx-button text="Buscar Cliente"></dx-button>
+      </dxi-item>
+      <dxi-item itemType="group">
+        <dxi-item dataField="cliente.nroCliente">
+          <dxo-label text="Numero de Cliente"></dxo-label>
+        </dxi-item>
+        <dxi-item itemType="group" [colCount]="2">
+          <dxi-item dataField="cliente.tipoDocumento"
+                    editorType="dxSelectBox"
+                    [editorOptions]="{
+                    dataSource: tipoDocDataSource,
+                    value: tipoDocumento,
+                    displayExpr: 'nombre', valueExpr: 'id' }">
+            <dxo-label text="Tipo Documento"></dxo-label>
+          </dxi-item>
+          <dxi-item dataField="cliente.nroDocumento">
+            <dxo-label text="Número Documento"></dxo-label>
+          </dxi-item>
+        </dxi-item>
+        <dxi-item itemType="group" [colCount]="2">
+          <dxi-item dataField="cliente.apellido">
+            <dxo-label text="Apellido"></dxo-label>
+          </dxi-item>
+          <dxi-item dataField="cliente.nombre">
+            <dxo-label text="Nombre"></dxo-label>
+          </dxi-item>
+        </dxi-item>
+        <dxi-item dataField="cliente.domicilio" colSpan="1">
+          <dxo-label text="Domicilio"></dxo-label>
+        </dxi-item>
+        <dxi-item itemType="group" [colCount]="2">
+          <dxi-item dataField="cliente.localidad"
+                    editorType="dxSelectBox"
+                    [editorOptions]="{
+                    dataSource: localidadDataSource,
+                    value: localidad,
+                    showClearButton: true,
+                    allowFiltering: true,
+                    displayExpr: 'nombre', valueExpr: 'id' }">
+            <dxo-label text="Localidad"></dxo-label>
+          </dxi-item>
+          <dxi-item dataField="cliente.provincia"
+                    editorType="dxSelectBox"
+                    [editorOptions]="{
+                    dataSource: provinciaDataSource,
+                    value: provincia,
+                    showClearButton: true,
+                    allowFiltering: true,
+                    displayExpr: 'nombre', valueExpr: 'id' }">
+            <dxo-label text="Provincia"></dxo-label>
+          </dxi-item>
+        </dxi-item>
+      </dxi-item>
+      <dxi-item itemType="group" colCount="2">
+        <dx-button text="Agregar hijos"></dx-button>
+      </dxi-item>
+      <dxi-item itemType="group" colCount="2">
+        <dx-button text="Confirmar"></dx-button>
+      </dxi-item>
+    </dxi-tab>
+
+    <dxi-tab title="Datos Vehículo" [colCount]="2">
+      <dxi-item itemType="group" [colSpan]="2" [colCount]="2">
+        <dxi-item [colSpan]="1" dataField="vehiculo.provincia"
+                  editorType="dxSelectBox"
+                  [editorOptions]="{
+                    dataSource: provinciaDataSource,
+                    value: provincia,
+                    showClearButton: true,
+                    allowFiltering: true,
+                    displayExpr: 'nombre', valueExpr: 'id' }">
+          <dxo-label text="Provincia"></dxo-label>
+        </dxi-item>
+        <dxi-item [colSpan]="1" dataField="vehiculo.localidad"
+                  editorType="dxSelectBox"
+                  [editorOptions]="{
+                    dataSource: localidadDataSource,
+                    value: localidad,
+                    showClearButton: true,
+                    allowFiltering: true,
+                    displayExpr: 'nombre', valueExpr: 'id' }">
+          <dxo-label text="Localidad"></dxo-label>
+        </dxi-item>
+        <dxi-item [colSpan]="1" dataField="vehiculo.marca"
+                  editorType="dxSelectBox"
+                  [editorOptions]="{
+                    dataSource: marcaDataSource,
+                    value: marca,
+                    showClearButton: true,
+                    allowFiltering: true,
+                    displayExpr: 'nombre', valueExpr: 'id' }">
+          <dxo-label text="Marca"></dxo-label>
+        </dxi-item>
+        <dxi-item [colSpan]="1" dataField="vehiculo.modelo"
+                  editorType="dxSelectBox"
+                  [editorOptions]="{
+                    dataSource: modeloDataSource,
+                    value: modelo,
+                    showClearButton: true,
+                    allowFiltering: true,
+                    displayExpr: 'nombre', valueExpr: 'id' }">
+          <dxo-label text="Modelo"></dxo-label>
+        </dxi-item>
+        <dxi-item [colSpan]="1" dataField="vehiculo.anio">
+          <dxo-label text="Año"></dxo-label>
+        </dxi-item>
+        <dxi-item [colSpan]="1" dataField="vehiculo.motor">
+          <dxo-label text="Motor"></dxo-label>
+        </dxi-item>
+        <dxi-item [colSpan]="1" dataField="vehiculo.patente">
+          <dxo-label text="Patente"></dxo-label>
+        </dxi-item>
+        <dxi-item [colSpan]="1" dataField="vehiculo.kmAnio">
+          <dxo-label text="Km. Por año"></dxo-label>
+        </dxi-item>
+        <dxi-item itemType="group" colSpan="2">
+          <dx-check-box
+            text="Se guarda en garage"
+            [(value)]="checkBoxValue">
+          </dx-check-box>
+          <br>
+          <dx-check-box
+            text="Tiene alarma"
+            [(value)]="checkBoxValue">
+          </dx-check-box>
+          <br>
+          <dx-check-box
+            text="Posee dispositivo de rastreo"
+            [(value)]="checkBoxValue">
+          </dx-check-box>
+          <br>
+          <dx-check-box
+            text="Posee tuercas antirrobo en las cuatro ruedas"
+            [(value)]="checkBoxValue">
+          </dx-check-box>
+        </dxi-item>
+        <dxi-item itemType="group" colSpan="2" colCount="2">
+          <dxi-item dataField="poliza.siniestros">
+            <dxo-label text="Siniestros en el útimo año"></dxo-label>
+          </dxi-item>
+          <dxi-item dataField="poliza.sumaAsegurada">
+            <dxo-label text="Suma Asegurada"></dxo-label>
+          </dxi-item>
+        </dxi-item>
+      </dxi-item>
+      <dxi-item itemType="group" colCount="2">
+        <dx-button text="Confirmar"></dx-button>
+      </dxi-item>
+    </dxi-tab>
+
+    <dxi-tab title="Datos Cobertura">
+      <dxi-item itemType="group" [colCount]="1" [colSpan]="2">
+        <dxi-item dataField="poliza.tipoCobertura"
+                  editorType="dxSelectBox"
+                  [editorOptions]="{
+                    dataSource: tipoCoberturaDataSource,
+                    value: tipoCobertura,
+                    showClearButton: true,
+                    displayExpr: 'nombre', valueExpr: 'id' }">
+          <dxo-label text="Tipo Cobertura"></dxo-label>
+        </dxi-item>
+        <dxi-item editorType="dxDateBox" dataField="fechaInicioVigencia"
+                  [editorOptions]="{ useMaskBehavior:true,
+                  width:'100%', showClearButton:'true',
+                  displayFormat:'dd/MM/yyyy', dateSerializationFormat: 'yyyy/MM/dd' }">
+          <dxo-label text="Fecha Inicio"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="poliza.formaPago"
+                  editorType="dxSelectBox"
+                  [editorOptions]="{
+                    dataSource: formaPagoDataSource,
+                    value: formaPago,
+                    showClearButton: true,
+                    displayExpr: 'nombre', valueExpr: 'id' }">
+          <dxo-label text="Forma de Pago"></dxo-label>
+        </dxi-item>
+      </dxi-item>
+      <dxi-item itemType="group" colCount="2">
+        <dx-button text="Confirmar"></dx-button>
+      </dxi-item>
+    </dxi-tab>
+    <dxi-tab title="Información Póliza">
+      <dxi-item itemType="group" caption="Titular del seguro" [colSpan]="1">
+        <dxi-item dataField="cliente.apellido">
+          <dxo-label text="Apellido"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="cliente.nombre">
+          <dxo-label text="Nombre"></dxo-label>
+        </dxi-item>
+      </dxi-item>
+      <dxi-item itemType="group" caption="Datos del vehículo" [colSpan]="1">
+        <dxi-item dataField="vehiculo.marca">
+          <dxo-label text="Marca"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="vehiculo.modelo">
+          <dxo-label text="Modelo"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="vehiculo.motor">
+          <dxo-label text="Motor"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="vehiculo.chasis">
+          <dxo-label text="Chasis"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="vehiculo.patente">
+          <dxo-label text="Patente"></dxo-label>
+        </dxi-item>
+      </dxi-item>
+      <dxi-item itemType="group" caption="Vigencia" colCount="2" colSpan="2">
+        <dxi-item editorType="dxDateBox" dataField="fechaInicio" colSpan="1">
+          <dxo-label text="Fecha Inicio"></dxo-label>
+        </dxi-item>
+        <dxi-item editorType="dxDateBox" dataField="fechaVigencia" colSpan="1">
+          <dxo-label text="Fecha Vigencia"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="sumaAsegurada">
+          <dxo-label text="Suma Asegurada"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="premio">
+          <dxo-label text="Premio"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="impDescuento">
+          <dxo-label text="Importe por descuentos"></dxo-label>
+        </dxi-item>
+        <dxi-item editorType="dxDateBox" dataField="fechaUltimoPago">
+          <dxo-label text="Última fecha de pago"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="montoTotal">
+          <dxo-label text="Monto total a abonar"></dxo-label>
+        </dxi-item>
+      </dxi-item>
+      <dxi-item itemType="group" colCount="2">
+        <dx-button text="Confirmar" style="padding-top: 5px"></dx-button>
+      </dxi-item>
+      <dxi-item itemType="group" colCount="2">
+        <dx-button text="Cancelar"></dx-button>
+      </dxi-item>
+    </dxi-tab>
+  </dxi-item>
+</dx-form>

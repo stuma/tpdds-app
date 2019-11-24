@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
 
+export class Poliza {
+  NroPoliza: number;
+  KmAnio: number;
+
+}
 export class Company {
     ID: number;
     CompanyName: string;
@@ -12,7 +17,7 @@ export class Company {
     Website: string;
 }
 
-let companies: Company[] = [{
+const companies: Company[] = [{
     ID: 1,
     CompanyName: 'SuprMart',
     Address: '702 SW 8th Street',

@@ -6,9 +6,15 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { DisplayDataComponent } from './pages/display-data/display-data.component';
 import { DxDataGridModule, DxFormModule, DxTabPanelComponent } from 'devextreme-angular';
-import { PolizaComponent } from './pages/alta-poliza/poliza.component';
+import {PolizaComponent} from './pages/alta-poliza/poliza.component';
+
 
 const routes: Routes = [
+  {
+    path: 'alta-poliza',
+    component: PolizaComponent,
+    canActivate: [ AuthGuardService ]
+  },
   {
     path: 'display-data',
     component: DisplayDataComponent,
@@ -20,11 +26,6 @@ const routes: Routes = [
     canActivate: [ AuthGuardService ]
   },
   {
-    path: 'home',
-    component: HomeComponent,
-    canActivate: [ AuthGuardService ]
-  },
-  {
     path: 'login-form',
     component: LoginFormComponent,
     canActivate: [ AuthGuardService ]
@@ -33,18 +34,14 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'home',
     canActivate: [ AuthGuardService ]
-  },
-  {
-    path: 'alta-poliza',
-    component: PolizaComponent,
-    canActivate: [ AuthGuardService ]
   }
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), DxDataGridModule, DxFormModule, DxTabPanelComponent],
+  imports: [RouterModule.forRoot(routes)],
   providers: [AuthGuardService],
   exports: [RouterModule],
-  declarations: [HomeComponent, ProfileComponent, DisplayDataComponent, PolizaComponent]
+  declarations: []
 })
 export class AppRoutingModule { }

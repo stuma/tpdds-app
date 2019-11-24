@@ -1,41 +1,52 @@
+import {Component} from '@angular/core';
+import {Company, Service} from 'src/app/pages/alta-poliza/poliza.service';
+import { DxFormModule } from 'devextreme-angular';
+import { DxTabsModule} from 'devextreme-angular';
 
 
-import { NgModule, Component, enableProdMode } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { DxTabPanelModule, DxCheckBoxModule, DxTemplateModule } from 'devextreme-angular';
-
-import { Company, Service } from 'src/app/pages/alta-poliza/poliza.service';
-
-
-@Component({
-    selector: 'app-poliza',
-    templateUrl: 'src/app/pages/alta-poliza/poliza.component.html',
-    styleUrls: ['src/app/pages/alta-poliza/poliza.component.scss'],
-    providers: [Service],
-    preserveWhitespaces: true
-})
-export class PolizaComponent {
-    companies: Company[];
-    itemCount: number;
-
-    constructor(service: Service) {
-        this.companies = service.getCompanies();
-        this.itemCount = this.companies.length;
-    }
+export class Poliza {
+  id: number;
+  nombre: string;
+  apellido: string;
 }
 
-@NgModule({
-    imports: [
-        BrowserModule,
-        DxTabPanelModule,
-        DxCheckBoxModule,
-        DxTemplateModule
-    ],
-    declarations: [PolizaComponent],
-    bootstrap: [PolizaComponent]
+@Component({
+  selector: 'app-poliza',
+  templateUrl: './poliza.component.html',
+  styleUrls: ['./poliza.component.scss'],
+  providers: [Service],
+  preserveWhitespaces: true
 })
-export class AppModule { }
+export class PolizaComponent {
+  companies: Company[];
+  itemCount: number;
+  poliza: Poliza;
+  companyData: any;
+  tabPanelOptions: any;
+  provinciaDataSource: any;
+  provincia: any;
+  localidadDataSource: any;
+  localidad: any;
+  marcaDataSource: any;
+  marca: any;
+  modeloDataSource: any;
+  modelo: any;
+  tipoDocDataSource: any;
+  tipoDocumento: any;
+  checkBoxValue: any;
+  indeterminateValue: any;
+  tipoCoberturaDataSource: any;
+  tipoCobertura: any;
+  formaPagoDataSource: any;
+  formaPago: any;
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+  constructor(service: Service) {
+    this.companies = service.getCompanies();
+    this.itemCount = this.companies.length;
+    this.poliza = {
+      id: 1,
+      nombre: 'Sebastián',
+      apellido: 'Tuma'
+    };
+  }
+}

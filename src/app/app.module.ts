@@ -6,11 +6,28 @@ import { SideNavOuterToolbarModule, SideNavInnerToolbarModule, SingleCardModule 
 import { FooterModule, LoginFormModule } from './shared/components';
 import { AuthService, ScreenService, AppInfoService } from './shared/services';
 import { AppRoutingModule } from './app-routing.module';
+import {PolizaComponent} from './pages/alta-poliza/poliza.component';
+import {DisplayDataComponent} from './pages/display-data/display-data.component';
+import {ProfileComponent} from './pages/profile/profile.component';
+import {HomeComponent} from './pages/home/home.component';
+import {
+  DxButtonModule,
+  DxCheckBoxModule,
+  DxDataGridModule,
+  DxDateBoxModule,
+  DxFormModule,
+  DxTabPanelModule,
+  DxTabsModule
+} from 'devextreme-angular';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PolizaComponent,
+    DisplayDataComponent,
+    ProfileComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +36,14 @@ import { AppRoutingModule } from './app-routing.module';
     SingleCardModule,
     FooterModule,
     LoginFormModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DxDataGridModule,
+    DxFormModule,
+    DxCheckBoxModule,
+    DxButtonModule,
+    DxTabsModule,
+    DxTabPanelModule,
+    DxDateBoxModule
   ],
   providers: [AuthService, ScreenService, AppInfoService],
   bootstrap: [AppComponent]

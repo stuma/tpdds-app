@@ -1,24 +1,18 @@
 import {Component} from '@angular/core';
-import {Company, Service} from 'src/app/pages/alta-poliza/poliza.service';
+import {Poliza, PolizaService} from 'src/app/pages/alta-poliza/poliza.service';
 import { DxFormModule } from 'devextreme-angular';
 import { DxTabsModule} from 'devextreme-angular';
 
-
-export class Poliza {
-  id: number;
-  nombre: string;
-  apellido: string;
-}
 
 @Component({
   selector: 'app-poliza',
   templateUrl: './poliza.component.html',
   styleUrls: ['./poliza.component.scss'],
-  providers: [Service],
+  providers: [PolizaService],
   preserveWhitespaces: true
 })
 export class PolizaComponent {
-  companies: Company[];
+
   itemCount: number;
   poliza: Poliza;
   companyData: any;
@@ -40,13 +34,6 @@ export class PolizaComponent {
   formaPagoDataSource: any;
   formaPago: any;
 
-  constructor(service: Service) {
-    this.companies = service.getCompanies();
-    this.itemCount = this.companies.length;
-    this.poliza = {
-      id: 1,
-      nombre: 'Sebastián',
-      apellido: 'Tuma'
-    };
+  constructor() {
   }
 }

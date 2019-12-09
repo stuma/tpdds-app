@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Cliente} from '../../shared/components/Cliente/cliente.service';
 import {Localidad} from '../../shared/components/Localidad/localidad.service';
+import {Vehiculo} from '../../shared/components/Vehiculo/vehiculo.service';
 
 export class Poliza {
   nroPoliza: any;
@@ -19,7 +20,6 @@ export class Poliza {
   hijos: any;
   vehiculo: Vehiculo;
 }
-
 
 @Injectable()
 export class PolizaService {

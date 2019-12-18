@@ -25,3 +25,19 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+  get_cliente                   GET      ANY      ANY    /api/clientes/{id}
+  get_enumcondivas              GET      ANY      ANY    /api/enumcondivas
+  get_enumestadocivils          GET      ANY      ANY    /api/enumestadocivils
+  get_enumformapagos            GET      ANY      ANY    /api/enumformapagos
+  get_enumsexos                 GET      ANY      ANY    /api/enumsexos
+  get_enumtipodnis              GET      ANY      ANY    /api/enumtipodnis
+  cget_localidades              GET      ANY      ANY    /api/localidades
+  get_localidades               GET      ANY      ANY    /api/localidades
+  get_marcas                    GET      ANY      ANY    /api/marcas
+  get_modelos                   GET      ANY      ANY    /api/modelos
+  getcalculopremiodesc_poliza   GET      ANY      ANY    /api/polizas/getcalculopremiodesc
+  get_poliza                    GET      ANY      ANY    /api/polizas/{id}
+  post_poliza                   POST     ANY      ANY    /api/polizas
+  get_provincias                GET      ANY      ANY    /api/provincias
+  get_tipocoberturas            GET      ANY      ANY    /api/tipocoberturas

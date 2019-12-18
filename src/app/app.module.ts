@@ -15,7 +15,7 @@ import {
   DxCheckBoxModule,
   DxDataGridModule,
   DxDateBoxModule,
-  DxFormModule,
+  DxFormModule, DxPopupModule,
   DxTabPanelModule,
   DxTabsModule
 } from 'devextreme-angular';
@@ -43,7 +43,8 @@ import {
     DxButtonModule,
     DxTabsModule,
     DxTabPanelModule,
-    DxDateBoxModule
+    DxDateBoxModule,
+    DxPopupModule
   ],
   providers: [AuthService, ScreenService, AppInfoService],
   bootstrap: [AppComponent]

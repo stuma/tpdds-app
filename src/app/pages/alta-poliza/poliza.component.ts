@@ -1,6 +1,6 @@
 import {Component, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {Poliza, PolizaService} from 'src/app/pages/alta-poliza/poliza.service';
-import {DxDataGridComponent, DxFormComponent, DxFormModule, DxSelectBoxComponent} from 'devextreme-angular';
+import {DxDataGridComponent, DxFormComponent, DxFormModule, DxPopupComponent, DxSelectBoxComponent} from 'devextreme-angular';
 import {DxTabsModule} from 'devextreme-angular';
 
 
@@ -17,6 +17,7 @@ export class PolizaComponent {
   @ViewChildren(DxFormComponent) form: QueryList<DxFormComponent>;
   // @ts-ignore
   @ViewChild(DxSelectBoxComponent) dxSelectBox: DxSelectBoxComponent;
+  @ViewChildren(DxPopupComponent) verHijos: DxPopupComponent;
   //
   provinciaDataSource: any = {};
   localidadDataSource: any = {};
@@ -42,31 +43,39 @@ export class PolizaComponent {
   formaPago: any;
   heightPopup: number;
   popupTitulo: string;
-  popupVisible: boolean;
+  verHijosVisible: boolean;
   gridHeight: any;
   hijo: any;
   sexo: any;
   estadoCivil: any;
+  agregarHijosVisible: boolean;
 
 
   constructor() {
   }
 
-  cerrarModal() {
-    this.popupVisible = false;
+  cerrarVerHijos() {
+    this.verHijosVisible = false;
+  }
+
+  cerrarAgregarHijos() {
+    this.agregarHijosVisible = false;
   }
 
   agregarHijo() {
-    this.popupVisible = true;
+    this.agregarHijosVisible = true;
   }
 
   limpiarFiltros() {
-
 
 
   }
 
   seleccionaItemGrid($event) {
 
+  }
+
+  verHijo() {
+    this.verHijosVisible = true;
   }
 }

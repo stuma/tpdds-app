@@ -56,13 +56,12 @@
         </dxi-item>
       </dxi-item>
       <dxi-item itemType="group" colCount="2">
-        <dx-button text="Agregar hijos" (onClick)="agregarHijo()" type="normal" icon="add"></dx-button>
+        <dx-button text="Agregar hijos" (onClick)="verHijo()" type="default" icon="add"></dx-button>
       </dxi-item>
       <dxi-item itemType="group" colCount="2">
         <dx-button text="Confirmar" type="success" icon="check"></dx-button>
       </dxi-item>
     </dxi-tab>
-
     <dxi-tab title="Datos Vehículo" [colCount]="2">
       <dxi-item itemType="group" [colSpan]="2" [colCount]="2">
         <dxi-item [colSpan]="1" dataField="vehiculo.provincia"
@@ -151,7 +150,6 @@
         <dx-button text="Confirmar" type="success" icon="check"></dx-button>
       </dxi-item>
     </dxi-tab>
-
     <dxi-tab title="Datos Cobertura">
       <dxi-item itemType="group" [colCount]="1" [colSpan]="2">
         <dxi-item dataField="poliza.tipoCobertura"
@@ -243,14 +241,16 @@
 </dx-form>
 
 <dx-popup class="popup btn-custom" width="1100" height="600" showTitle="true"
-          (onHidden)="cerrarModal()"
-          title="Ver/Agregar hijos" dragEnabled="false" (closeOnOutsideClick)="false" (closeOnBackButton)="false"
-          [(visible)]="popupVisible">
-  <dxi-item itemType="group" colSpan="2">
-    <dxi-item itemType="group" colCount="1" colSpan="1" style="width: 50%;float: left;">
+          (onHidden)="cerrarVerHijos()"
+          title="Ver/Agregar hijos" dragEnabled="false" closeOnOutsideClick="false" closeOnBackButton="false"
+          [(visible)]="verHijosVisible">
+    <dxi-item itemType="group" style="width: 100%;">
       <div class="actions">
         <dx-button text="Borrar filtros" style="float: right;" class="pull-right" (onClick)="limpiarFiltros()"
                    stylingMode="text" type="normal" icon="filter">
+        </dx-button>
+        <dx-button text="Agregar Hijos" style="float: right;" class="pull-right" (onClick)="agregarHijo()"
+                   stylingMode="text" type="default" icon="filter">
         </dx-button>
       </div>
       <br>
@@ -262,7 +262,7 @@
                     [height]="gridHeight" (onSelectionChanged)="seleccionaItemGrid($event)" [showBorders]="true">
         <dxo-selection mode="single"></dxo-selection>
         <dxo-filter-row [visible]="true"></dxo-filter-row>
-        <dxi-column dataField="fechaApertura" dataType="date" caption="Fecha Nacimiento" format="dd/MM/yyyy">
+        <dxi-column dataField="fechaNacimiento" dataType="date" caption="Fecha Nacimiento" format="dd/MM/yyyy">
         </dxi-column>
         <dxi-column dataField="sexo.descripcion" [allowFiltering]="true" caption="Sexo">
           <dxo-lookup [dataSource]="sexoDataSource" displayExpr="descripcion" valueExpr="id"></dxo-lookup>
@@ -277,38 +277,36 @@
         </dxo-summary>
       </dx-data-grid>
     </dxi-item>
+</dx-popup>
 
-    <dxi-item itemType="group" colCount="1" colSpan="1" style="width: 50%;float: right;">
-      <dxi-item itemType="group" style="margin-top: 10px">
-        <dx-button text="Añadir hijo/a" type="normal" icon="add">
-        </dx-button>
+<dx-popup class="popup btn-custom" width="700" height="500" showTitle="true"
+          (onHidden)="cerrarAgregarHijos()"
+          title="Ver/Agregar hijos" dragEnabled="false" closeOnOutsideClick="false" closeOnBackButton="false"
+          [(visible)]="agregarHijosVisible">
+
+    <dx-form [formData]="hijo" labelLocation="top" minColWidth="200" colCount="1" width="100%">
+      <dxi-item editorType="dxDateBox" dataField="fechaNacimiento" colSpan="1">
+        <dxo-label text="Fecha de Nacimiento`"></dxo-label>
       </dxi-item>
-      <dx-form [formData]="hijo" labelLocation="top" minColWidth="200" colCount="1" width="100%">
-        <dxi-item editorType="dxDateBox" dataField="fechaNacimiento" colSpan="1">
-          <dxo-label text="Fecha de Nacimiento`"></dxo-label>
-        </dxi-item>
-        <dxi-item dataField="hijo?.sexo"
-                  editorType="dxSelectBox"
-                  [editorOptions]="{
+      <dxi-item dataField="hijo?.sexo"
+                editorType="dxSelectBox"
+                [editorOptions]="{
                     dataSource: sexoDataSource,
                     value: sexo,
                     displayExpr: 'nombre', valueExpr: 'id' }">
-          <dxo-label text="Sexo"></dxo-label>
-        </dxi-item>
-        <dxi-item dataField="hijo?.estadoCivil"
-                  editorType="dxSelectBox"
-                  [editorOptions]="{
+        <dxo-label text="Sexo"></dxo-label>
+      </dxi-item>
+      <dxi-item dataField="hijo?.estadoCivil"
+                editorType="dxSelectBox"
+                [editorOptions]="{
                     dataSource: estadoCivilDataSource,
                     value: estadoCivil,
                     displayExpr: 'nombre', valueExpr: 'id' }">
-          <dxo-label text="Estado Civil"></dxo-label>
-        </dxi-item>
-        <dxi-item itemType="group">
-          <dx-button text="Aceptar" type="success" icon="add">
-          </dx-button>
-        </dxi-item>
-      </dx-form>
-    </dxi-item>
-  </dxi-item>
-
+        <dxo-label text="Estado Civil"></dxo-label>
+      </dxi-item>
+      <dxi-item itemType="group" style="margin: 10px">
+        <dx-button text="Añadir hijo/a" type="normal" icon="add" style="margin: 10px" (onClick)="agregarHijo()">
+        </dx-button>
+      </dxi-item>
+    </dx-form>
 </dx-popup>

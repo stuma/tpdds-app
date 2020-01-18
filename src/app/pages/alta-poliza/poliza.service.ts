@@ -38,12 +38,34 @@ export class Poliza {
 }
 
 export class Cliente {
+  id: Number;
+  dni: Number;
+  cuil_cuit: Number;
+  fecha_nac: Date;
+  apellido: String;
+  nombre: String;
+  email: String;
+  profesion: string;
+  anio_registro: Number;
+  enum_tipo_dni: TipoDni;
+  enum_cond_iva: CondicionIva;
+  direccion: Direccion;
+  enum_estado_civil: EstadoCivil;
+  enum_sexo: Sexo;
+}
+
+export class Direccion {
   id: number;
-  dni: number;
-  nombre: string;
-  apellido: string;
-  domicilio: string;
-  tipoDoc: TipoDni;
+  nombreCalle: string;
+  numCalle: number;
+  numDpto: string;
+  localidad: Localidad;
+}
+
+export class Localidad {
+  id: Number;
+  nombre_localidad: String;
+  codigo_postal: Number;
 }
 
 export class EstadoCivil {
@@ -84,12 +106,6 @@ export class Sexo {
 export class Provincia {
   id: number;
   nombreProvincia: string;
-}
-
-export class Localidad {
-  id: number;
-  nombre: string;
-  codigoPostal: number;
 }
 
 export class Vehiculo {
@@ -182,18 +198,27 @@ export class PolizaService {
 
   getCliente() {
     const cliente: Cliente = {
-      id: null,
-      dni: null,
-      nombre: '',
-      apellido: '',
-      domicilio: '',
-      tipoDoc: null
-    };
+        id: null,
+        dni: null,
+        cuil_cuit: null,
+        fecha_nac: null,
+        apellido: '',
+        nombre: '',
+        email: '',
+        profesion: '',
+        anio_registro: null,
+        enum_tipo_dni: null,
+        enum_cond_iva: null,
+        direccion: null,
+        enum_estado_civil: null,
+        enum_sexo: null
+      }
+    ;
     return cliente;
   }
 
   getHijo() {
-    let hijo: Hijo = {
+    const hijo: Hijo = {
       id: null,
       dni: null,
       fechaNac: null,
@@ -214,8 +239,62 @@ export class PolizaService {
       });
   }
 
+  getCondicionesIva() {
+    return this.http.get(environment.apiUrl + 'enumcondivas')
+      .toPromise()
+      .then((data: any) => {
+        return data;
+      })
+      .catch(error => {
+        throw new Error('Data Loading Error');
+      });
+  }
+
+  getFormasPago() {
+    return this.http.get(environment.apiUrl + 'enumformapagos')
+      .toPromise()
+      .then((data: any) => {
+        return data;
+      })
+      .catch(error => {
+        throw new Error('Data Loading Error');
+      });
+  }
+
+  getMedidasSeguridad() {
+    return this.http.get(environment.apiUrl + 'medidasseguridads')
+      .toPromise()
+      .then((datos: any) => {
+        return datos;
+      })
+      .catch(error => {
+        throw new Error('Data Loading Error');
+      });
+  }
+
+  getSexos() {
+    return this.http.get(environment.apiUrl + 'enumsexos')
+      .toPromise()
+      .then((datos: any) => {
+        return datos;
+      })
+      .catch(error => {
+        throw new Error('Data Loading Error');
+      });
+  }
+
+  getTipoDni() {
+    return this.http.get(environment.apiUrl + 'enumtipodnis')
+      .toPromise()
+      .then((datos: any) => {
+        return datos;
+      })
+      .catch(error => {
+        throw new Error('Data Loading Error');
+      });
+  }
+
   getClienteById(cliente) {
-    console.log(cliente);
     return this.http.get(environment.apiUrl + 'clientes/' + cliente)
       .toPromise()
       .then((datos: any) => {
@@ -226,8 +305,19 @@ export class PolizaService {
       });
   }
 
-  getMedidasSeguridad(){
-    return this.http.get(environment.apiUrl + 'medidasseguridads')
+  getLocalidades() {
+    return this.http.get(environment.apiUrl + 'localidades')
+      .toPromise()
+      .then((datos: any) => {
+        return datos;
+      })
+      .catch(error => {
+        throw new Error('Data Loading Error');
+      });
+  }
+
+  getProvincias() {
+    return this.http.get(environment.apiUrl + 'provincias')
       .toPromise()
       .then((datos: any) => {
         return datos;

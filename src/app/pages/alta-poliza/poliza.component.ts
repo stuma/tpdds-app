@@ -21,7 +21,6 @@ export class PolizaComponent {
   @ViewChild(DxSelectBoxComponent) dxSelectBox: DxSelectBoxComponent;
   @ViewChildren(DxPopupComponent) verHijos: DxPopupComponent;
 
-  // polizaService = PolizaService;
   //
   provinciaDataSource: any = {};
   localidadDataSource: any = {};
@@ -33,6 +32,8 @@ export class PolizaComponent {
   hijosDataSource: any = {};
   sexoDataSource: any = {};
   estadoCivilDataSource: any = {};
+  condicionIvaDataSource: any = {};
+  medidasSeguridadDataSource: any = {};
   //
   provincia: any;
   localidad: any;
@@ -46,6 +47,7 @@ export class PolizaComponent {
   poliza: Poliza;
   tipoCobertura: any;
   formaPago: any;
+  buttonOptions: any;
   //
   agregarHijosVisible: boolean;
   verHijosVisible: boolean;
@@ -55,39 +57,77 @@ export class PolizaComponent {
   gridHeight: any;
   tabSelectionChanged: any;
   baseUrl: any;
-  medidasSeguridadDataSource: any;
-
 
   constructor(private polizaService: PolizaService) {
     // @ts-ignore
     // this.polizaService = polizaService;
     this.provinciaDataSource = [];
     this.localidadDataSource = [];
+    this.hijosDataSource = [];
     this.marcaDataSource = [];
     this.modeloDataSource = [];
-    this.tipoDocDataSource = [];
+    this.tipoDocDataSource = []; //
     this.tipoCoberturaDataSource = [];
-    this.formaPagoDataSource = [];
-    this.hijosDataSource = [];
-    this.sexoDataSource = [];
-    this.estadoCivilDataSource = [];
-
+    this.medidasSeguridadDataSource = []; //
+    this.formaPagoDataSource = []; //
+    this.sexoDataSource = []; //
+    this.estadoCivilDataSource = []; //
+    this.condicionIvaDataSource = []; //
     this.tabPanelOptions = {selectedIndex: 0, activeStateEnabled: true, onSelectionChanged: this.tabSelectionChanged};
     this.baseUrl = environment.baseUrl;
 
-  }
-
-
-  // tslint:disable-next-line:use-lifecycle-interface
-  ngOnInit() {
-    // @ts-ignore
     this.poliza = this.polizaService.getPoliza();
-    // @ts-ignore
     this.cliente = this.polizaService.getCliente();
+    this.hijo = this.polizaService.getHijo();
+    this.buscarCliente = this.buscarCliente.bind(this);
 
-    // @ts-ignore
+    this.polizaService.getTipoDni().then((response) => {
+      this.tipoDocDataSource = new ArrayStore({
+        key: 'id',
+        data: response
+      });
+    }).catch(error => {
+      console.log(error);
+    });
+
+    this.polizaService.getMedidasSeguridad().then((response) => {
+      this.medidasSeguridadDataSource = new ArrayStore({
+        key: 'id',
+        data: response
+      });
+    }).catch(error => {
+      console.log(error);
+    });
+
+    this.polizaService.getFormasPago().then((response) => {
+      this.formaPagoDataSource = new ArrayStore({
+        key: 'id',
+        data: response
+      });
+    }).catch(error => {
+      console.log(error);
+    });
+
+    this.polizaService.getSexos().then((response) => {
+      this.sexoDataSource = new ArrayStore({
+        key: 'id',
+        data: response
+      });
+    }).catch(error => {
+      console.log(error);
+    });
+
     this.polizaService.getEstadoCivil().then((response) => {
       this.estadoCivilDataSource = new ArrayStore({
+        key: 'id',
+        data: response
+      });
+    }).catch(error => {
+      console.log(error);
+    });
+
+    this.polizaService.getCondicionesIva().then((response) => {
+      this.condicionIvaDataSource = new ArrayStore({
         key: 'id',
         data: response.items
       });
@@ -95,8 +135,24 @@ export class PolizaComponent {
       console.log(error);
     });
 
-  }
+    this.polizaService.getLocalidades().then((response) => {
+      this.localidadDataSource = new ArrayStore({
+        key: 'id',
+        data: response
+      });
+    }).catch(error => {
+      console.log(error);
+    });
 
+    this.polizaService.getProvincias().then((response) => {
+      this.provinciaDataSource = new ArrayStore({
+        key: 'id',
+        data: response
+      });
+    }).catch(error => {
+      console.log(error);
+    });
+  }
 
   cerrarVerHijos() {
     this.verHijosVisible = false;
@@ -110,26 +166,16 @@ export class PolizaComponent {
     this.agregarHijosVisible = true;
   }
 
-  limpiarFiltros() {
-
-
-  }
-
-  seleccionaItemGrid($event) {
-
-  }
-
   verHijo() {
     this.verHijosVisible = true;
   }
 
   buscarCliente() {
-    // @ts-ignore
-    this.cliente = this.polizaService.getClienteById(15);
-    console.log(this.cliente);
+    this.polizaService.getClienteById(15).then((response) => {
+      this.poliza.cliente = response;
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
-  medidasSeguridadChanged($event: any) {
-
-  }
 }

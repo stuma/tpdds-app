@@ -5,13 +5,13 @@
         <dxi-item
           itemType="button"
           horizontalAlignment="left"
-          [buttonOptions]='{text:"Buscar Cliente", onClick:buscarCliente, icon:"filter"}'>
+          [buttonOptions]='{text:"Buscar Cliente", onClick:"buscarCliente()", icon:"filter"}'>
         </dxi-item>
       </dxi-item>
       <dxi-item itemType="group">
         <dxi-item dataField="cliente.id">
           <dxo-label text="Numero de Cliente"></dxo-label>
-        </dxi-item>
+        </dxi-item> 
         <dxi-item itemType="group" [colCount]="2">
           <dxi-item dataField="cliente.enum_tipo_dni"
                     editorType="dxSelectBox"
@@ -81,7 +81,7 @@
                     value: provincia,
                     showClearButton: true,
                     allowFiltering: true,
-                    displayExpr: 'nombre', valueExpr: 'id' }">
+                    displayExpr: 'nombre_provincia', valueExpr: 'id' }">
           <dxo-label text="Provincia"></dxo-label>
           <dxi-validation-rule type="required" message="Debe seleccionar una provincia.">
           </dxi-validation-rule>
@@ -93,7 +93,7 @@
                     value: localidad,
                     showClearButton: true,
                     allowFiltering: true,
-                    displayExpr: 'nombre', valueExpr: 'id' }">
+                    displayExpr: 'nombre_localidad', valueExpr: 'id' }">
           <dxo-label text="Localidad"></dxo-label>
           <dxi-validation-rule type="required" message="Debe seleccionar una localidad.">
           </dxi-validation-rule>
@@ -133,21 +133,21 @@
         <dxi-item>
           <dxo-label text="Medidas de seguridad"></dxo-label>
           <div *dxTemplate>
-            <dx-tree-view #dxTreeView2 [items]="this.medidasSeguridadDataSource" [width]="320"
+            <dx-tree-view #dxTreeView2 [items]="medidasSeguridadDataSource" [width]="320"
                           showCheckBoxesMode="normal" (onItemSelectionChanged)="medidasSeguridadChanged($event)">
               <div *dxTemplate="let data of 'item'">
                 {{data.nombre}}
               </div>
             </dx-tree-view>
           </div>
-          <dxi-validation-rule type="required" message="Debe seleccionar al menos un area.">
+          <dxi-validation-rule type="required" message="Debe seleccionar al menos una medida de seguridad.">
           </dxi-validation-rule>
         </dxi-item>
         <dxi-item itemType="group" colSpan="2" colCount="2">
-          <dxi-item dataField="poliza.siniestros">
+          <dxi-item dataField="siniestros">
             <dxo-label text="Siniestros en el útimo año"></dxo-label>
           </dxi-item>
-          <dxi-item dataField="poliza.sumaAsegurada">
+          <dxi-item dataField="sumaAsegurada">
             <dxo-label text="Suma Asegurada"></dxo-label>
           </dxi-item>
         </dxi-item>
@@ -158,7 +158,7 @@
     </dxi-tab>
     <dxi-tab title="Datos Cobertura">
       <dxi-item itemType="group" [colCount]="1" [colSpan]="2">
-        <dxi-item dataField="poliza.tipoCobertura"
+        <dxi-item dataField="tipoCobertura"
                   editorType="dxSelectBox"
                   [editorOptions]="{
                     dataSource: tipoCoberturaDataSource,
@@ -173,13 +173,13 @@
                   displayFormat:'dd/MM/yyyy', dateSerializationFormat: 'yyyy/MM/dd' }">
           <dxo-label text="Fecha Inicio"></dxo-label>
         </dxi-item>
-        <dxi-item dataField="poliza.formaPago"
+        <dxi-item dataField="formaPago"
                   editorType="dxSelectBox"
                   [editorOptions]="{
                     dataSource: formaPagoDataSource,
                     value: formaPago,
                     showClearButton: true,
-                    displayExpr: 'nombre', valueExpr: 'id' }">
+                    displayExpr: 'descripcion', valueExpr: 'id' }">
           <dxo-label text="Forma de Pago"></dxo-label>
         </dxi-item>
       </dxi-item>
@@ -246,9 +246,9 @@
   </dxi-item>
 </dx-form>
 
-<dx-popup class="popup btn-custom" width="1100" height="600" showTitle="true"
+<dx-popup [width]="500" [height]="500" [showTitle]="true"
           (onHidden)="cerrarVerHijos()"
-          title="Ver/Agregar hijos" dragEnabled="false" closeOnOutsideClick="false" closeOnBackButton="false"
+          title="Ver/Agregar hijos" [dragEnabled]="false" [closeOnOutsideClick]="false" [closeOnBackButton]="false"
           [(visible)]="verHijosVisible">
   <dxi-item itemType="group" style="width: 100%;">
     <div class="actions">
@@ -259,10 +259,8 @@
                  stylingMode="text" type="default" icon="filter">
       </dx-button>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
+  </dxi-item>
+  <dxi-item itemType="group" style="width: 100%;">
     <dx-data-grid id="gridContainer" [dataSource]="hijosDataSource" [remoteOperations]="true"
                   [repaintChangesOnly]="true"
                   [height]="gridHeight" (onSelectionChanged)="seleccionaItemGrid($event)" [showBorders]="true">

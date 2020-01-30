@@ -14,7 +14,7 @@ import { DataSourceService } from 'src/app/shared/components/data-sources/data-s
   providers: [PolizaService],
   preserveWhitespaces: true
 })
-export class PolizaComponent implements OnInit{
+export class PolizaComponent implements OnInit {
   // @ts-ignore
   @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent;
   @ViewChildren(DxFormComponent) form: QueryList<DxFormComponent>;
@@ -85,14 +85,15 @@ export class PolizaComponent implements OnInit{
     this.tabPanelOptions = { selectedIndex: 0, activeStateEnabled: true, onSelectionChanged: this.tabSelectionChanged };
     this.baseUrl = environment.baseUrl;
 
-    
+
     this.buscarCliente = this.buscarCliente.bind(this);
     this.medidasSeguridadChanged = this.medidasSeguridadChanged.bind(this);
+    this.verHijo = this.verHijo.bind(this);
 
-    
+
   }
 
-  ngOnInit(){
+  ngOnInit() {
 
     this.popupHijosHeight = window.innerHeight - 50;
     this.popupHijosWidth = window.innerWidth - 50;
@@ -164,6 +165,11 @@ export class PolizaComponent implements OnInit{
       console.log(error);
     });
 
+    this.medidasSeguridadDataSource = new ArrayStore ({
+      key: 'id',
+      data: this.dataSourceService.getMedidasSeguridad()
+    });
+
   }
 
   buscarCliente() {
@@ -187,7 +193,7 @@ export class PolizaComponent implements OnInit{
   }
 
   verHijo() {
-    console.log("botgon apretado");
+    console.log("boton apretado");
     this.verHijosVisible = true;
   }
 

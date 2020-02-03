@@ -38,6 +38,8 @@ export class PolizaComponent implements OnInit {
   estadoCivilDataSource: any = {};
   condicionIvaDataSource: any = {};
   medidasSeguridadDataSource: any = {};
+  clientesDataSource: any = {};
+  cuotasDataSource: any = {};
   //
   provincia: any;
   localidad: any;
@@ -55,6 +57,8 @@ export class PolizaComponent implements OnInit {
   //
   agregarHijosVisible: boolean;
   verHijosVisible: boolean;
+  buscarClienteVisible: boolean;
+  verCuotasVisible: boolean;
   //
   popupHijosHeight: number;
   popupHijosWidth: number;
@@ -82,13 +86,20 @@ export class PolizaComponent implements OnInit {
     this.sexoDataSource = []; //
     this.estadoCivilDataSource = []; //
     this.condicionIvaDataSource = []; //
+    this.clientesDataSource = [];
+    this.cuotasDataSource = [];
     this.tabPanelOptions = { selectedIndex: 0, activeStateEnabled: true, onSelectionChanged: this.tabSelectionChanged };
     this.baseUrl = environment.baseUrl;
 
+    this.buscarClienteVisible = false;
 
+    this.altaCliente = this.altaCliente.bind(this);
     this.buscarCliente = this.buscarCliente.bind(this);
+    this.cerrarBuscarCliente = this.cerrarBuscarCliente.bind(this);
     this.medidasSeguridadChanged = this.medidasSeguridadChanged.bind(this);
     this.verHijo = this.verHijo.bind(this);
+    this.verCuotas = this.verCuotas.bind(this);
+
 
 
   }
@@ -98,11 +109,14 @@ export class PolizaComponent implements OnInit {
     this.popupHijosHeight = window.innerHeight - 50;
     this.popupHijosWidth = window.innerWidth - 50;
     this.verHijosVisible = false;
+    this.verCuotasVisible = false;
+    this.agregarHijosVisible = false;
+    this.buscarClienteVisible = false;
     this.poliza = this.polizaService.getPoliza();
     this.cliente = this.polizaService.getCliente();
     this.hijo = this.polizaService.getHijo();
 
-    this.dataSourceService.getTipoDni().then((response) => {
+    /*this.dataSourceService.getTipoDni().then((response) => {
       this.tipoDocDataSource = new ArrayStore({
         key: 'id',
         data: response
@@ -165,19 +179,38 @@ export class PolizaComponent implements OnInit {
       console.log(error);
     });
 
-    this.medidasSeguridadDataSource = new ArrayStore ({
+    this.medidasSeguridadDataSource = new ArrayStore({
       key: 'id',
       data: this.dataSourceService.getMedidasSeguridad()
-    });
+    });*/
 
   }
 
+  altaCliente(){
+    let result = confirm("<i>Desea dar de alta un nuevo cliente?</i>");
+  }
+
   buscarCliente() {
-    this.polizaService.getClienteById(15).then((response) => {
+    //clientesDataSource
+    console.log("click buscar cliente");
+    this.buscarClienteVisible = true;
+    this.clientesDataSource = new ArrayStore({
+      key: "id",
+      data: []
+    });
+    this.buscarClienteVisible = true;
+    /*this.polizaService.getClienteById(15).then((response) => {
       this.poliza.cliente = response;
     }).catch(error => {
       console.log(error);
-    });
+    });*/
+  }
+  cerrarBuscarCliente() {
+    this.buscarClienteVisible = false;
+  }
+
+  seleccionaCliente($event) {
+
   }
 
   cerrarVerHijos() {
@@ -206,6 +239,49 @@ export class PolizaComponent implements OnInit {
       //this.usuario.delegaciones.splice($event.itemData.itemIndex, 1);
     }
 
+  }
+
+  guardarPoliza() {
+    /*if(this.form.instance.validate().isValid){
+      if(this.poliza.id){ //editar
+        this.liquidacionesStore.getStore().update(this.liquidacion.id, this.liquidacion).then((data: any)=> {
+          this.liquidacion = data;
+          this.dataGrid.instance.refresh();
+          notify({
+            message: "La poliza fue editada correctamente.",
+            position: {
+              my:"center top",
+              at:"center top"
+            }
+          }, "success". 30000);
+          this.cerrarModal();
+        }).catch(error => {
+          console.log(error);
+        });
+      }
+    } else { //alta
+        this.liquidacionesStore.getStore().insert(this.liquidacion).then((data: any) => {
+          this.liquidacion = data;
+          this.dataGrid.instance.refresh();
+          notify({
+            message: "La poliza fue creada correctamente.",
+            position: {
+              my: "center top",
+              at: "center top"
+            }
+          }, "success", 3000);
+        })catch(error => {
+          console.log(error);
+        });
+    }*/
+  }
+
+  verCuotas(){
+    this.verCuotasVisible = true;
+    this.cuotasDataSource = new ArrayStore({
+      key: "id",
+      data:[] 
+    })
   }
 
 

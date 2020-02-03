@@ -3,7 +3,7 @@
     <dxi-tab title="Datos Cliente">
       <dxi-item itemType="group" colCount="2">
         <dxi-item itemType="button" horizontalAlignment="left"
-          [buttonOptions]='{text:"Buscar Cliente", onClick:"buscarCliente()", icon:"filter"}'>
+          [buttonOptions]='{text:"Buscar Cliente", onClick:buscarCliente, icon:"filter"}'>
         </dxi-item>
       </dxi-item>
       <dxi-item itemType="group">
@@ -200,11 +200,14 @@
         <dxi-item dataField="impDescuento">
           <dxo-label text="Importe por descuentos"></dxo-label>
         </dxi-item>
-        <dxi-item editorType="dxDateBox" dataField="fechaUltimoPago">
+        <dxi-item editorType="dxDateBox" dataField="fechaUltimoPago" colSpan="1">
           <dxo-label text="Última fecha de pago"></dxo-label>
         </dxi-item>
         <dxi-item dataField="montoTotal">
           <dxo-label text="Monto total a abonar"></dxo-label>
+        </dxi-item>
+        <dxi-item itemType="button" horizontalAlignment="left"
+          [buttonOptions]='{text:"Ver Cuotas", onClick:verCuotas, icon:"filter" }'>
         </dxi-item>
       </dxi-item>
       <dxi-item itemType="group" colCount="2">
@@ -217,7 +220,7 @@
   </dxi-item>
 </dx-form>
 
-<dx-popup [width]="500" [height]="500" [showTitle]="true" (onHidden)="cerrarVerHijos()" title="Ver/Agregar hijos"
+<dx-popup width="700" height="500" [showTitle]="true" (onHidden)="cerrarVerHijos()" title="Ver/Agregar hijos"
   [dragEnabled]="false" [closeOnOutsideClick]="false" [closeOnBackButton]="false" [(visible)]="verHijosVisible">
   <dx-form [(formData)]="poliza.listaHijos" labelLocation="top">
     <dxi-item itemType="group" style="width: 100%;">
@@ -254,7 +257,7 @@
   </dx-form>
 </dx-popup>
 
-<dx-popup class="popup btn-custom" width="700" height="500" showTitle="true" (onHidden)="cerrarAgregarHijos()"
+<dx-popup width="700" height="500" showTitle="true" (onHidden)="cerrarAgregarHijos()"
   title="Ver/Agregar hijos" dragEnabled="false" closeOnOutsideClick="false" closeOnBackButton="false"
   [(visible)]="agregarHijosVisible">
 
@@ -279,4 +282,56 @@
       </dx-button>
     </dxi-item>
   </dx-form>
+</dx-popup>
+
+<dx-popup width="700" height="500" showTitle="true" (onHidden)="cerrarBuscarCliente()" title="Búsqueda de Cliente"
+  dragEnabled="false" closeOnOutsideClick="false" closeOnBackButton="false" [(visible)]="buscarClienteVisible">
+  <div>
+    <div>
+      <dx-button text="Alta Cliente" (onClick)="altaCliente()" type="success" icon="add" [visible]="true">
+      </dx-button>
+    </div>
+    <dx-data-grid id="busquedaClienteDataGrid" #busquedaClientes [dataSource]="clientesDataSource"
+      (onSelectionChanged)="seleccionaCliente($event)" [showBorders]="true">
+      <dxo-selection mode="single"></dxo-selection>
+      <dxo-filter-row [visible]="true"></dxo-filter-row>
+      <dxi-column dataField="id" dataType="number" caption="ID">
+      </dxi-column>
+      <dxi-column dataField="nombre" dataType="string" caption="Nombre">
+      </dxi-column>
+      <dxi-column dataField="apellido" dataType="string" caption="Apellido">
+      </dxi-column>
+      <dxi-column dataField="enum_tipo_dni.descripcion" [allowFiltering]="true" caption="Tipo DNI">
+        <dxo-lookup [dataSource]="tipoDocDataSource" displayExpr="descripcion" valueExpr="id"></dxo-lookup>
+      </dxi-column>
+      <dxi-column dataField="dni" dataType="string" caption="Documento">
+      </dxi-column>
+      <dxo-scrolling mode="standard" rowRenderingMode="standard"></dxo-scrolling>
+      <dxo-paging [pageSize]="20"></dxo-paging>
+      <dxo-summary>
+        <dxi-total-item column="id" summaryType="count"></dxi-total-item>
+      </dxo-summary>
+    </dx-data-grid>
+  </div>
+
+</dx-popup>
+
+<dx-popup width="700" height="500" showTitle="true" (onHidden)="cerrarVerCuotas()" title="Cuotas"
+  dragEnabled="false" closeOnOutsideClick="false" closeOnBackButton="false" [(visible)]="verCuotasVisible">
+  <dx-data-grid id="verCuotasDataGrid" #busquedaClientes [dataSource]="cuotasDataSource"
+      (onSelectionChanged)="seleccionaCliente($event)" [showBorders]="true">
+      <dxo-selection mode="single"></dxo-selection>
+      <dxo-filter-row [visible]="true"></dxo-filter-row>
+      <dxi-column dataField="id" dataType="number" caption="ID">
+      </dxi-column>
+      <dxi-column dataField="numero" dataType="string" caption="Número">
+      </dxi-column>
+      <dxi-column dataField="Monto" dataType="number" caption="Monto">
+      </dxi-column>
+      <dxo-scrolling mode="standard" rowRenderingMode="standard"></dxo-scrolling>
+      <dxo-paging [pageSize]="20"></dxo-paging>
+      <dxo-summary>
+        <dxi-total-item column="id" summaryType="count"></dxi-total-item>
+      </dxo-summary>
+    </dx-data-grid>
 </dx-popup>

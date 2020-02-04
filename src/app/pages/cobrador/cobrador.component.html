@@ -1,0 +1,84 @@
+<div style="padding:5px 20px">
+    <div>
+        <dx-button text="Abrir modulo de Cobros" (onClick)="abrirModuloCobros()" type="success" icon="add">
+        </dx-button>
+    </div>
+</div>
+
+<dx-popup [width]="moduloCobrosWidth" [height]="moduloCobrosHeight" [showTitle]="true" (onHidden)="cerrarModuloCobros()"
+    title="Módulo Cobros" [dragEnabled]="false" [closeOnOutsideClick]="false" [closeOnBackButton]="false"
+    [(visible)]="verModuloCobros">
+    <dx-form [(formData)]="poliza" labelLocation="top" width="100%">
+
+        <dxi-item itemType="group" colCount="2">
+            <dxi-item itemType="button" horizontalAlignment="left" colSpan="1"
+                [buttonOptions]='{text:"Seleccionar Póliza", onClick:buscarPoliza, icon:"filter"}'>
+            </dxi-item>
+            <dxi-item dataField="nroPoliza" [colSpan]="1">
+                <dxo-label text="Número de Póliza"></dxo-label>
+            </dxi-item>
+        </dxi-item>
+
+        <dxi-item itemType="group" colCount="3" caption="Titular del seguro">
+            <dxi-item dataField="cliente.id" [colSpan]="1">
+                <dxo-label text="Nº Cliente"></dxo-label>
+            </dxi-item>
+            <dxi-item dataField="cliente.nombre" [colSpan]="1">
+                <dxo-label text="Nombre"></dxo-label>
+            </dxi-item>
+            <dxi-item dataField="cliente.apellido" [colSpan]="1">
+                <dxo-label text="Apellido"></dxo-label>
+            </dxi-item>
+        </dxi-item>
+
+        <dxi-item itemType="group" colCount="3" caption="Vehículo">
+            <dxi-item dataField="vehiculo.marca.nombre" [colSpan]="1">
+                <dxo-label text="Marca"></dxo-label>
+            </dxi-item>
+            <dxi-item dataField="vehiculo.marca.modelo.nombre" [colSpan]="1">
+                <dxo-label text="Modelo"></dxo-label>
+            </dxi-item>
+            <dxi-item dataField="vehiculo.patente" [colSpan]="1">
+                <dxo-label text="Patente"></dxo-label>
+            </dxi-item>
+        </dxi-item>
+
+        <dxi-item itemType="group" colCount="1">
+            <dxi-item dataField="vigencia" [colSpan]="1">
+                <dxo-label text="Vigencia"></dxo-label>
+            </dxi-item>
+        </dxi-item>
+
+        <dxi-item itemType="group" colCount="2">
+            <dxi-item itemType="button" horizontalAlignment="left" colSpan="1"
+                [buttonOptions]='{text:"Cuotas Pendientes", onClick:verCuotasPendientes, icon:"filter"}'>
+            </dxi-item>
+            <dxi-item itemType="button" horizontalAlignment="left" colSpan="1"
+                [buttonOptions]='{text:"Cuotas a Pagar", onClick:verCuotasAPagar, icon:"filter"}'>
+            </dxi-item>
+        </dxi-item>
+
+        <dxi-item itemType="group" colCount="3">
+            <dxi-item dataField="importeTotal" [colSpan]="1">
+                <dxo-label text="Importe Total"></dxo-label>
+            </dxi-item>
+            <dxi-item dataField="monto" [colSpan]="1">
+                <dxo-label text="Monto"></dxo-label>
+            </dxi-item>
+            <dxi-item dataField="vuelto" [colSpan]="1">
+                <dxo-label text="Vuelto"></dxo-label>
+            </dxi-item>
+        </dxi-item>
+
+        <dxi-item itemType="group" colCount="2">
+            <dxi-item itemType="button" horizontalAlignment="left" colSpan="1"
+                [buttonOptions]='{text:"cancelar", onClick:cancelarCobros, icon:"cancel"}'>
+            </dxi-item>
+            <dxi-item itemType="button" horizontalAlignment="left" colSpan="1"
+                [buttonOptions]='{text:"Finalizar Pago", onClick:finalizarPago, icon:"success"}'>
+            </dxi-item>
+        </dxi-item>
+
+    </dx-form>
+
+</dx-popup>

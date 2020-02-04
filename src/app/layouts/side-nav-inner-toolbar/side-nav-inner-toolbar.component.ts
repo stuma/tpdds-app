@@ -1,6 +1,6 @@
 import { Component, OnInit, NgModule, Input } from '@angular/core';
 import { SideNavigationMenuModule, HeaderModule } from '../../shared/components';
-import { ScreenService } from '../../shared/services';
+import { ScreenService, AuthService } from '../../shared/services';
 import { DxDrawerModule } from 'devextreme-angular/ui/drawer';
 import { DxScrollViewModule } from 'devextreme-angular/ui/scroll-view';
 import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
@@ -15,7 +15,7 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./side-nav-inner-toolbar.component.scss']
 })
 export class SideNavInnerToolbarComponent implements OnInit {
-  menuItems = navigation;
+  menuItems = [];
   selectedRoute = '';
 
   menuOpened: boolean;
@@ -29,7 +29,28 @@ export class SideNavInnerToolbarComponent implements OnInit {
   minMenuSize = 0;
   shaderEnabled = false;
 
-  constructor(private screen: ScreenService, private router: Router) { }
+  constructor(private screen: ScreenService, private router: Router, private authenticationService: AuthService) {
+    this.authenticationService.currentUserRol.subscribe((x) => {
+      if (x == 'gestor') {
+        this.menuItems = [
+          {
+            text: 'Gestión de Pólizas',
+            icon: 'folder',
+            path: '/alta-poliza'
+          }
+        ]
+      }
+      if (x == 'cobrador') {
+        this.menuItems = [
+          {
+            text: 'Cobros',
+            icon: 'money',
+            path: '/cobrador'
+          }
+        ]
+      }
+    });
+  }
 
   ngOnInit() {
     this.menuOpened = this.screen.sizes['screen-large'];
@@ -98,8 +119,8 @@ export class SideNavInnerToolbarComponent implements OnInit {
 }
 
 @NgModule({
-  imports: [ SideNavigationMenuModule, DxDrawerModule, HeaderModule, DxToolbarModule, DxScrollViewModule, CommonModule ],
-  exports: [ SideNavInnerToolbarComponent ],
-  declarations: [ SideNavInnerToolbarComponent ]
+  imports: [SideNavigationMenuModule, DxDrawerModule, HeaderModule, DxToolbarModule, DxScrollViewModule, CommonModule],
+  exports: [SideNavInnerToolbarComponent],
+  declarations: [SideNavInnerToolbarComponent]
 })
 export class SideNavInnerToolbarModule { }

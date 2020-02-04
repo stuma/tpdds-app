@@ -7,12 +7,17 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { DisplayDataComponent } from './pages/display-data/display-data.component';
 import { DxDataGridModule, DxFormModule, DxTabPanelComponent } from 'devextreme-angular';
 import {PolizaComponent} from './pages/alta-poliza/poliza.component';
-
+import { CobradorComponent } from './pages/cobrador/cobrador.component'
 
 const routes: Routes = [
   {
     path: 'alta-poliza',
     component: PolizaComponent,
+    canActivate: [ AuthGuardService ]
+  },
+  {
+    path: 'cobros',
+    component: CobradorComponent,
     canActivate: [ AuthGuardService ]
   },
   {

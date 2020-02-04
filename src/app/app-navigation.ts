@@ -1,7 +1,12 @@
 export const navigation = [
   {
-    text: 'Alta de Pólizas',
+    text: 'Gestión de Pólizas',
     icon: 'folder',
     path: '/alta-poliza'
+  },
+  {
+    text: 'Cobros',
+    icon: 'money',
+    path: '/cobros'
   }
 ];

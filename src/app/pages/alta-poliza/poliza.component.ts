@@ -116,12 +116,12 @@ export class PolizaComponent implements OnInit {
     this.cliente = this.polizaService.getCliente();
     this.hijo = this.polizaService.getHijo();
 
-    /*this.dataSourceService.getTipoDni().then((response) => {
+    this.dataSourceService.getTipoDni().then((response) => {
       this.tipoDocDataSource = new ArrayStore({
         key: 'id',
         data: response
       });
-    }).catch(error => {
+    }).catch(error => { 
       console.log(error);
     });
 
@@ -182,7 +182,7 @@ export class PolizaComponent implements OnInit {
     this.medidasSeguridadDataSource = new ArrayStore({
       key: 'id',
       data: this.dataSourceService.getMedidasSeguridad()
-    });*/
+    });
 
   }
 

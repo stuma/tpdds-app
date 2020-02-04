@@ -22,12 +22,14 @@ import {
 import {RouterModule} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {PolizaModule} from './pages/alta-poliza/poliza.module';
+import { CobradorComponent } from './pages/cobrador/cobrador.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PolizaComponent,
+    CobradorComponent,
     DisplayDataComponent,
     ProfileComponent,
     HomeComponent
